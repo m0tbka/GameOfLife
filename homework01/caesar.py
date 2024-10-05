@@ -7,18 +7,18 @@ def encrypt_english_letter_caesar(letter: str, shift: int) -> str:
     Encrypts one english letter at a time using a Caesar cipher.
     """
 
-    alphabet_start_pos = (ord('A') if letter.isupper() else ord('a'))
+    alphabet_start_pos = ord("A") if letter.isupper() else ord("a")
     alphabet_length = len(string.ascii_lowercase)
 
     return chr((ord(letter) + shift - alphabet_start_pos) % alphabet_length + alphabet_start_pos)
 
 
-def decrypt_english_letter_caesar(letter: string, shift: int) -> str:
+def decrypt_english_letter_caesar(letter: str, shift: int) -> str:
     """
     Encrypts one english letter at a time using a Caesar cipher.
     """
 
-    alphabet_start_pos = (ord('A') if letter.isupper() else ord('a'))
+    alphabet_start_pos = ord("A") if letter.isupper() else ord("a")
     alphabet_length = len(string.ascii_lowercase)
 
     return chr((ord(letter) - shift - alphabet_start_pos) % alphabet_length + alphabet_start_pos)

@@ -17,7 +17,7 @@ def is_prime(n: int) -> bool:
     if n < 2:
         return False
 
-    for i in range(2, int(n ** 0.5) + 1):
+    for i in range(2, int(n**0.5) + 1):
         if n % i == 0:
             return False
     return True
@@ -25,7 +25,7 @@ def is_prime(n: int) -> bool:
 
 def gcd(a: int, b: int) -> int:
     """
-    Euclid's extended algorithm for determining the greatest common divisor.
+    Euclid's algorithm for determining the greatest common divisor.
 
     >>> gcd(12, 15)
     3
@@ -34,17 +34,24 @@ def gcd(a: int, b: int) -> int:
     """
 
     if b == 0:
-        gcd.x = 1
-        gcd.y = 0
         return a
+    return gcd(b, a % b)
 
-    g = gcd(b, a % b)
 
-    y1 = gcd.y
-    gcd.y = gcd.x - (a // b) * gcd.y
-    gcd.x = y1
+def extended_gcd(a: int, b: int) -> tp.Tuple[int, int, int]:
+    """
+    Euclid's extended algorithm for determining the greatest common divisor.
+    """
 
-    return g
+    if b == 0:
+        return a, 1, 0
+
+    g, x1, y1 = extended_gcd(b, a % b)
+
+    y = x1 - (a // b) * y1
+    x = y1
+
+    return g, x, y
 
 
 def multiplicative_inverse(e: int, phi: int) -> int:
@@ -56,8 +63,7 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     23
     """
 
-    gcd(e, phi)
-    return (phi + gcd.__dict__['x']) % phi
+    return (phi + extended_gcd(e, phi)[1]) % phi
 
 
 def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
@@ -103,7 +109,7 @@ def decrypt(pk: tp.Tuple[int, int], ciphertext: tp.List[int]) -> str:
     # Unpack the key into its components
     key, n = pk
     # Generate the plaintext based on the ciphertext and key using a^b mod m
-    plain = [chr((char ** key) % n) for char in ciphertext]
+    plain = [chr((char**key) % n) for char in ciphertext]
     # Return the array of bytes as a string
     return "".join(plain)
 
