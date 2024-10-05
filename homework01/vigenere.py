@@ -7,7 +7,7 @@ def encrypt_english_letter_vigenere(letter: str, keyword: str, index: int) -> st
     Encrypts one english letter at a time using a Vigenere cipher.
     """
 
-    alphabet_start_pos = (ord('A') if letter.isupper() else ord('a'))
+    alphabet_start_pos = ord("A") if letter.isupper() else ord("a")
 
     shift = ord(keyword[index % len(keyword)]) - alphabet_start_pos
 
@@ -19,7 +19,7 @@ def decrypt_english_letter_vigenere(letter: string, keyword: str, index: int) ->
     Encrypts one english letter at a time using a Vigenere cipher.
     """
 
-    alphabet_start_pos = (ord('A') if letter.isupper() else ord('a'))
+    alphabet_start_pos = ord("A") if letter.isupper() else ord("a")
 
     shift = ord(keyword[index % len(keyword)]) - alphabet_start_pos
 
