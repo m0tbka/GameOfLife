@@ -1,5 +1,6 @@
 import string
-from caesar import encrypt_english_letter_caesar, decrypt_english_letter_caesar
+
+from caesar import decrypt_english_letter_caesar, encrypt_english_letter_caesar
 
 
 def encrypt_english_letter_vigenere(letter: str, keyword: str, index: int) -> str:
@@ -14,7 +15,7 @@ def encrypt_english_letter_vigenere(letter: str, keyword: str, index: int) -> st
     return encrypt_english_letter_caesar(letter, shift=shift)
 
 
-def decrypt_english_letter_vigenere(letter: string, keyword: str, index: int) -> str:
+def decrypt_english_letter_vigenere(letter: str, keyword: str, index: int) -> str:
     """
     Encrypts one english letter at a time using a Vigenere cipher.
     """
