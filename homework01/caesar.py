@@ -1,4 +1,27 @@
+import string
 import typing as tp
+
+
+def encrypt_english_letter_caesar(letter: str, shift: int) -> str:
+    """
+    Encrypts one english letter at a time using a Caesar cipher.
+    """
+
+    alphabet_start_pos = (ord('A') if letter.isupper() else ord('a'))
+    alphabet_length = len(string.ascii_lowercase)
+
+    return chr((ord(letter) + shift - alphabet_start_pos) % alphabet_length + alphabet_start_pos)
+
+
+def decrypt_english_letter_caesar(letter: string, shift: int) -> str:
+    """
+    Encrypts one english letter at a time using a Caesar cipher.
+    """
+
+    alphabet_start_pos = (ord('A') if letter.isupper() else ord('a'))
+    alphabet_length = len(string.ascii_lowercase)
+
+    return chr((ord(letter) - shift - alphabet_start_pos) % alphabet_length + alphabet_start_pos)
 
 
 def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
@@ -14,8 +37,16 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     >>> encrypt_caesar("")
     ''
     """
+
     ciphertext = ""
-    # PUT YOUR CODE HERE
+    alphabet = string.ascii_letters
+
+    for letter in plaintext:
+        if letter in alphabet:
+            ciphertext += encrypt_english_letter_caesar(letter, shift)
+        else:
+            ciphertext += letter
+
     return ciphertext
 
 
@@ -32,8 +63,16 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     >>> decrypt_caesar("")
     ''
     """
+
     plaintext = ""
-    # PUT YOUR CODE HERE
+    alphabet = string.ascii_letters
+
+    for letter in ciphertext:
+        if letter in alphabet:
+            plaintext += decrypt_english_letter_caesar(letter, shift)
+        else:
+            plaintext += letter
+
     return plaintext
 
 
