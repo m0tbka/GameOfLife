@@ -1,27 +1,29 @@
 import string
 import typing as tp
 
+ALPHABET_LENGTH = len(string.ascii_lowercase)
+UPPER_A_ASCII = ord("A")
+LOWER_A_ASCII = ord("a")
 
-def encrypt_english_letter_caesar(letter: str, shift: int) -> str:
+
+def encrypt_english_letter(letter: str, shift: int) -> str:
     """
     Encrypts one english letter at a time using a Caesar cipher.
     """
 
-    alphabet_start_pos = ord("A") if letter.isupper() else ord("a")
-    alphabet_length = len(string.ascii_lowercase)
+    alphabet_start_pos = UPPER_A_ASCII if letter.isupper() else LOWER_A_ASCII
 
-    return chr((ord(letter) + shift - alphabet_start_pos) % alphabet_length + alphabet_start_pos)
+    return chr((ord(letter) + shift - alphabet_start_pos) % ALPHABET_LENGTH + alphabet_start_pos)
 
 
-def decrypt_english_letter_caesar(letter: str, shift: int) -> str:
+def decrypt_english_letter(letter: str, shift: int) -> str:
     """
     Encrypts one english letter at a time using a Caesar cipher.
     """
 
-    alphabet_start_pos = ord("A") if letter.isupper() else ord("a")
-    alphabet_length = len(string.ascii_lowercase)
+    alphabet_start_pos = UPPER_A_ASCII if letter.isupper() else LOWER_A_ASCII
 
-    return chr((ord(letter) - shift - alphabet_start_pos) % alphabet_length + alphabet_start_pos)
+    return chr((ord(letter) - shift - alphabet_start_pos) % ALPHABET_LENGTH + alphabet_start_pos)
 
 
 def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
@@ -43,7 +45,7 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
 
     for letter in plaintext:
         if letter in alphabet:
-            ciphertext += encrypt_english_letter_caesar(letter, shift)
+            ciphertext += encrypt_english_letter(letter, shift)
         else:
             ciphertext += letter
 
@@ -69,7 +71,7 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
 
     for letter in ciphertext:
         if letter in alphabet:
-            plaintext += decrypt_english_letter_caesar(letter, shift)
+            plaintext += decrypt_english_letter(letter, shift)
         else:
             plaintext += letter
 
