@@ -61,8 +61,6 @@ class GameOfLife:
 
         grid.update(alive_cells)
 
-        # print(f"{alive_num=}")
-
         return grid
 
     def get_neighbours(self, cell: Cell) -> Cells:
@@ -97,10 +95,6 @@ class GameOfLife:
         """
 
         next_generation = Grid(self.rows, self.cols)
-        # print(next_generation)
-        # print(self.curr_generation)
-        # print(self.curr_generation.print())
-        # print(self.curr_generation.print(debug=True))
         for cell in self.curr_generation:
             neighbours = self.get_neighbours(cell)
             alive_n = neighbours.count(ALIVE_CELL)

@@ -1,50 +1,45 @@
-Запустить тесты можно так:
+# Игра жизнь
 
-```
-python -m unittest discover
-test_can_create_a_random_grid (test_life.TestGameOfLife) ... ok
-test_can_create_an_empty_grid (test_life.TestGameOfLife) ... ok
-test_can_update (test_life.TestGameOfLife) ... ok
-test_get_neighbours (test_life.TestGameOfLife) ... ok
-test_get_neighbours_for_bottom_side (test_life.TestGameOfLife) ... ok
-test_get_neighbours_for_left_side (test_life.TestGameOfLife) ... ok
-test_get_neighbours_for_lower_left_corner (test_life.TestGameOfLife) ... ok
-test_get_neighbours_for_lower_right_corner (test_life.TestGameOfLife) ... ok
-test_get_neighbours_for_right_side (test_life.TestGameOfLife) ... ok
-test_get_neighbours_for_upper_left_corner (test_life.TestGameOfLife) ... ok
-test_get_neighbours_for_upper_right_corner (test_life.TestGameOfLife) ... ok
-test_get_neighbours_for_upper_side (test_life.TestGameOfLife) ... ok
-test_is_changing (test_life.TestGameOfLife) ... ok
-test_is_max_generations_exceed (test_life.TestGameOfLife) ... ok
-test_is_not_changing (test_life.TestGameOfLife) ... ok
-test_prev_generation_is_correct (test_life.TestGameOfLife) ... ok
+<img src="materials/gol_quick.gif">
 
-----------------------------------------------------------------------
-Ran 16 tests in 0.026s
+### Запуск
 
-OK
+``
+python main.py <width> <height> -cs <cell_size> -s <speed>
+``
 
-test_can_create_a_random_grid (test_life_proto.TestGameOfLife) ... ok
-test_can_create_an_empty_grid (test_life_proto.TestGameOfLife) ... ok
-test_can_update (test_life_proto.TestGameOfLife) ... ok
-test_get_neighbours (test_life_proto.TestGameOfLife) ... ok
-test_get_neighbours_for_bottom_side (test_life_proto.TestGameOfLife) ... ok
-test_get_neighbours_for_left_side (test_life_proto.TestGameOfLife) ... ok
-test_get_neighbours_for_lower_left_corner (test_life_proto.TestGameOfLife) ... ok
-test_get_neighbours_for_lower_right_corner (test_life_proto.TestGameOfLife) ... ok
-test_get_neighbours_for_right_side (test_life_proto.TestGameOfLife) ... ok
-test_get_neighbours_for_upper_left_corner (test_life_proto.TestGameOfLife) ... ok
-test_get_neighbours_for_upper_right_corner (test_life_proto.TestGameOfLife) ... ok
-test_get_neighbours_for_upper_side (test_life_proto.TestGameOfLife) ... ok
+- width - обязательный аргумент - ширина поля
+- height - обязательный аргумент - высота поля
+- cell_size - не обязательный аргумент - размер одной клетки
+- speed - не обязательный аргумент - скорость игры
 
-----------------------------------------------------------------------
-Ran 12 tests in 1.015s
+### Hotkeys
 
-OK
-............................
-----------------------------------------------------------------------
-Ran 28 tests in 0.047s
+- **q** - выйти
+- **space** - остановить игру, дальнейшие действия возможны только на паузе
+- **s** / **l** - сохранить/загрузить игру
+- **c** - очистить поле
+- **r** - очистить поле и случайно сгенерировать новое
+- **n** | **"right_arrow"** - перейти на следующую итерацию
+- **p** | **"left_arrow"** - перейти на предыдущую итерацию(возможен переход только на *предыдущую* итерацию, при
+  последующем нажатии будет произведен возврат на текущую)
+- **ЛКМ** - изменить состояние клетки(с живого на мертвое и обратно)
+- **f** - включить режим закрашивания: каждая клетка, где находится курсор, будет закрашена в соответствии с режимом
+  закраски
+- **m** - изменить режим закраски: по умолчанию закрашивает живыми клетками
 
-OK
-```
+### Примеры игры
 
+Демонстрация возможностей приложения
+
+пауза игры, \
+закрашивание/очистка клеток по клику и по позиции курсора, \
+очищение поля, \
+создание случайного поля, \ 
+перемотка состояний стрелочками, \
+увеличение/уменьшение скорости игры
+<img src="materials/gol_full.gif">
+
+загрузка из файла состояния игры, \
+сохранение в файл состояния игры
+<img src="materials/gol_load_safe.gif">

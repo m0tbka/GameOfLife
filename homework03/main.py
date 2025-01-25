@@ -1,16 +1,16 @@
-from life import GameOfLife
-from life_gui import GUI
+import argparse
 
+from start_game import start_game
 
-def main():
-    # life = GameOfLife((90, 180), randomize=True)
-    # life = GameOfLife((60, 120), randomize=True)
-    life = GameOfLife((15, 20), randomize=True)
-    # gui = GUI(life, life.rows, life.cols, speed=1000, cell_size=10)
-    # gui = GUI(life, life.rows, life.cols, speed=10, cell_size=15)
-    gui = GUI(life, life.rows, life.cols, speed=10, cell_size=65)
-    gui.run()
-
-
-if __name__ == '__main__':
-    main()
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("width", help="Количество клеток по ширине", type=int)
+    parser.add_argument("height", help="Количество клеток по высоте", type=int)
+    parser.add_argument(
+        "-cs", dest="cell_size", help="Размер одной клетки", type=int, default=65, required=False
+    )
+    parser.add_argument(
+        "-s", dest="speed", help="Скорость игры", type=int, default=10, required=False
+    )
+    args = parser.parse_args()
+    start_game(args.width, args.height, args.cell_size, args.speed)

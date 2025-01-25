@@ -1,3 +1,4 @@
+import os.path
 import time
 import tkinter
 import tkinter.filedialog
@@ -17,8 +18,8 @@ class GUI(UI):
     ) -> None:
         super().__init__(life)
 
-        self.width = cols * cell_size + 2
-        self.height = rows * cell_size + 2
+        self.width = cols * cell_size
+        self.height = rows * cell_size
         self.cell_size = cell_size
 
         # Устанавливаем размер окна
@@ -31,6 +32,9 @@ class GUI(UI):
 
     def get_cell(self, coordinates: tp.Tuple[int, int]) -> tp.Tuple[int, int]:
         return (coordinates[1]) // self.cell_size, (coordinates[0]) // self.cell_size
+
+    def check_coords(self, coordinates: tp.Tuple[int, int]) -> bool:
+        return not 0 <= coordinates[0] < self.life.rows or not 0 <= coordinates[1] < self.life.cols
 
     def draw_lines(self) -> None:
         """
@@ -131,12 +135,16 @@ class GUI(UI):
                         # save grid to file, only const path
                         filename = Path(self.choose_file())
                         print(filename)
+                        if not os.path.isfile(filename):
+                            continue
                         self.life.save_to_file(filename=filename)
                     elif event.key == K_l:  # load
                         # available only on pause
                         # load grid from file, only const path
                         filename = Path(self.choose_file())
                         print(filename)
+                        if not os.path.isfile(filename):
+                            continue
                         self.life = self.life.load_from_file(filename=filename)
                         self.__init__(
                             self.life, self.life.rows, self.life.cols, self.cell_size, self.speed
@@ -146,12 +154,14 @@ class GUI(UI):
                     elif event.key == K_r:  # random | reset
                         # available only on pause
                         # destroy grid and create new by random
+                        self.life.generations = 0
                         self.life.prev_generation = self.life.create_grid()
                         self.life.curr_generation = self.life.create_grid(randomize=True)
                         self.life.step()
                         go_next = True
                     elif event.key == K_c:  # clear
                         # available only on pause
+                        self.life.generations = 0
                         self.life.prev_generation = self.life.create_grid(randomize=True)
                         self.life.curr_generation = self.life.create_grid()
                         go_next = True
@@ -176,11 +186,19 @@ class GUI(UI):
                         )
                         go_next = True
                         skip_step = True
-                elif event.type == MOUSEBUTTONDOWN and on_pause:
+                    elif event.key == K_UP:  # increase speed
+                        # available only on pause
+                        # increase the speed of game
+                        self.speed = min(99, max(1, self.speed + 2))
+                    elif event.key == K_DOWN:  # decrease speed
+                        # available only on pause
+                        # decrease the speed of game
+                        self.speed = min(99, max(1, self.speed - 2))
+                elif event.type == MOUSEBUTTONDOWN:
                     # available only on pause
                     # change cell state
                     indexes = self.get_cell(event.pos)
-                    if indexes[0] >= self.height or indexes[1] >= self.width:
+                    if self.check_coords(indexes):
                         continue
                     if event.button == 1:
                         self.life.curr_generation[indexes[0], indexes[1]].swap()
@@ -189,7 +207,7 @@ class GUI(UI):
 
             if filling:
                 indexes = self.get_cell(pygame.mouse.get_pos())
-                if indexes[0] >= self.height or indexes[1] >= self.width:
+                if self.check_coords(indexes):
                     continue
                 self.life.curr_generation[indexes[0], indexes[1]].state = filling_mode
                 go_next = True
@@ -199,7 +217,7 @@ class GUI(UI):
                 continue
             go_next = False
 
-            print(self.speed, self.life.generations, time.ctime())
+            print(f"Generation: {self.life.generations:4d}, speed: {self.speed:2d}, {time.ctime()}")
 
             # Логика игры
             # Выполнение одного шага игры (обновление состояния ячеек)
@@ -222,7 +240,6 @@ class GUI(UI):
             if self.life.is_max_generations_exceeded or (
                 (not self.life.is_changing) and self.life.generations != 1
             ):
-                print(123123123123123)
-                on_pause = 1
+                on_pause = True
 
         pygame.quit()
